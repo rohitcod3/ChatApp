@@ -5,7 +5,7 @@ import connectDB from "./config/database.js";
 // import {connectDB} from './config/database.js'
 import userRoute from "./routes/userRoute.js"
 import cookieParser from "cookie-parser"
-
+import messageRoute from "./routes/messageRoute.js"
 dotenv.config();
 
 const app = express();
@@ -22,6 +22,7 @@ app.use(cookieParser());
 //     res.send('<h1>Rohit</h1>')
 // })
 app.use("/api/v1/user", userRoute);
+app.use("/api/v1/message", messageRoute)
 //localhost:8080/api/v1/user/register
 
 
