@@ -7,7 +7,7 @@ export const sendMessage =  async (req,res) => {
       console.log("Sender ID (req.id):", req.id);
       const receiverId = req.params.id;
       const  {message} = req.body;
-      
+
       let gotConversation = await Conversation.findOne({
         participants:{$all : [senderId, receiverId]}
       });
@@ -36,4 +36,18 @@ export const sendMessage =  async (req,res) => {
     }catch(error){
         console.log(error);
     }
+}
+
+export const getMessage = async (req,res) => {
+  try{
+  const receiverId = req.params.id;
+  const senderId = req.id;
+  const conversation = await Conversation.findOne({
+  participants:{$all : [senderId, receiverId]}
+  }).populate("messages")
+  // console.log(conversation)
+  return res.status(200).json(conversation?.message)
+  }catch(error){
+    console.log(error);
+  }
 }
