@@ -3,9 +3,11 @@ import { Message } from "../models/messageModel.js";  // Add this line to import
 
 export const sendMessage =  async (req,res) => {
     try{
-      const senderId = req. id;
+      const senderId = req.id;
+      console.log("Sender ID (req.id):", req.id);
       const receiverId = req.params.id;
       const  {message} = req.body;
+      
       let gotConversation = await Conversation.findOne({
         participants:{$all : [senderId, receiverId]}
       });

@@ -4,6 +4,9 @@ import jwt from "jsonwebtoken"
 import dotenv from "dotenv";
 
 dotenv.config();
+console.log("process dot env", process.env.JWT_SECRET_KEY)
+
+
 export const register = async(req,res) => {
     try{
      const {fullName, username, password, confirmPassword, gender} = req.body;
@@ -63,6 +66,10 @@ export const login = async(req, res) => {
      };
 
      const token = await jwt.sign(tokenData, process.env.JWT_SECRET_KEY, {expiresIn: '1d'});
+
+     if (!process.env.JWT_SECRET_KEY) {
+      throw new Error("JWT_SECRET_KEY is not defined in the environment variables.");
+  }
 
     return res.status(200).cookie("token", token, {maxAge:1*24*60*60*1000,httpOnly:true, sameSite:'strict'}).json({
         _id:user._id,
